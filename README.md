@@ -1,5 +1,4 @@
 # Alienwaregame 
-Practice a game porject
-Creating a new branch is quick AND simple.
-Merge with no Fast forward.
-Is programing...
+Practicing a project.
+Use python to program a Alienwaregame
+Ok ,let's go!
