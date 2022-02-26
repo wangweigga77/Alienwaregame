@@ -17,18 +17,22 @@ class AlienInvasion:
     def run_game(self):
         """开始游戏的主循环"""
         while True:
-            #  监视键盘和鼠标事件
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-            
-            #  每次循环都重绘屏幕
-            self.screen.fill(self.settings.bg_color)
-            # 填充背景后，调用blitme()将飞船绘制在屏幕上，确保它出现在背景前面
-            self.ship.blitme()
+            self._check_events()
+            self._update_screen()
 
-            #  让最后一次绘制的屏幕可见
-            pygame.display.flip()
+    def _check_events(self):
+        #  监视键盘和鼠标事件
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            
+    def _update_screen(self):
+        #  填充主窗口背景色
+        self.screen.fill(self.settings.bg_color)
+        # 填充背景后，调用blitme()将飞船绘制在屏幕上，确保它出现在背景前面
+        self.ship.blitme()
+        # 将绘制的图像刷新在屏幕上
+        pygame.display.flip()
 
 if __name__ == '__main__':
     #  创建游戏实例并运行游戏
