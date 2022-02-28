@@ -16,11 +16,15 @@ class Ship:
         self.rect.midbottom = self.screen_rect.midbottom
         # 右移标志
         self.moving_right = False
+        # 左移标志
+        self.moving_left = False
 
     def update(self):
         """根据移动标志调整飞船的位置"""
         if self.moving_right == True:
             self.rect.x += 1
+        if self.moving_left ==True:
+            self.rect.x -= 1
 
 
     def blitme(self):
