@@ -6,3 +6,7 @@
 dist
 build
 __pychache__
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
