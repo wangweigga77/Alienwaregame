@@ -7,10 +7,13 @@ class Ship:
         """初始化飞船并设置其初始位置"""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
+        self.settings = ai_game.settings
 
         # 加载飞船图像并获取其外接矩阵
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
+        # 使用一个浮点型属性存储self.rect的小数坐标
+        self.ship_x = float(self.rect.x)
 
         # 对于每搜新飞船，都将其放在屏幕底部的中央
         self.rect.midbottom = self.screen_rect.midbottom
@@ -21,10 +24,11 @@ class Ship:
 
     def update(self):
         """根据移动标志调整飞船的位置"""
-        if self.moving_right == True:
-            self.rect.x += 1
-        if self.moving_left ==True:
-            self.rect.x -= 1
+        if self.moving_right:
+            self.ship_x += self.settings.ship_speed
+        if self.moving_left:
+            self.ship_x -= self.settings.ship_speed
+        self.rect.x = self.ship_x
 
 
     def blitme(self):
