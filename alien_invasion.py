@@ -22,24 +22,33 @@ class AlienInvasion:
             self._update_screen()
 
     def _check_events(self):
-        #  监视键盘和鼠标事件
+        #  实时监测键盘和鼠标事件
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    # 右移标志为真
-                    self.ship.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    #  左移标志为真
-                    self.ship.moving_left = True
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    # 右移标志位假
-                    self.ship.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    # 左移标志位假
-                    self.ship.moving_left = False
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self,event):
+        """按键事件响应"""
+        if event.key == pygame.K_RIGHT:
+           # 右移标签为真
+           self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            # 左移标签为真
+            self.ship.moving_left = True
+
+    def _check_keyup_events(self, event):
+        """松键事件响应"""
+        if event.key == pygame.K_RIGHT:
+            # 右移标签为假
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            #  左移标签为假
+            self.ship.moving_left = False
+             
             
     def _update_screen(self):
         #  填充主窗口背景色
