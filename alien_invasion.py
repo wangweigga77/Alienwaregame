@@ -39,6 +39,9 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             # 左移标签为真
             self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            # 退出游戏
+            sys.exit()
 
     def _check_keyup_events(self, event):
         """松键事件响应"""
