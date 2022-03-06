@@ -6,6 +6,7 @@ class Bullet(Sprite):
 
     def __init__(self, ai_game):
         """在飞船当前位置的midtop创建一个子弹对象"""
+        # 使用super()继承Sprite类的属性和方法
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
@@ -19,7 +20,7 @@ class Bullet(Sprite):
         self.bullet_y = float(self.rect.y)
 
     def update(self):
-        """线上移动子弹"""
+        """向上移动子弹"""
         # 更新表示子弹位置的小数y坐标
         self.bullet_y -= self.settings.bullet_speed
         # 更新子弹的rect的位置

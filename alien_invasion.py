@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     """管理游戏资源和行为的类"""
@@ -15,12 +16,15 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self):
         """开始游戏的主循环"""
         while True:
             self._check_events()
             self.ship.update()
+            # 对编组调用update()时，编组自动其中的每个精灵调用bullet.update()
+            self.bullets.update()
             self._update_screen()
 
     def _check_events(self):
@@ -48,6 +52,9 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             # 退出游戏
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            # 调用辅助方法_fire_bullet()发射子弹
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         """松键事件响应"""
@@ -57,14 +64,21 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             #  左移标签为假
             self.ship.moving_left = False
-             
-            
+        
+    def _fire_bullet(self,event):
+        """创建一颗子弹,并将其加入编组bullets中"""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+                        
     def _update_screen(self):
         """更新屏幕绘制的内容并刷新在屏幕上"""
-        #  填充主窗口背景色
+        # 填充主窗口背景色
         self.screen.fill(self.settings.bg_color)
         # 填充背景后，调用blitme()将飞船绘制在屏幕上，确保它出现在背景前面
         self.ship.blitme()
+        # 通过迭代将bullets.sprites()列表中的所有精灵绘制到屏幕上
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         # 将绘制的图像刷新在屏幕上
         pygame.display.flip()
 
