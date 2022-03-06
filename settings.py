@@ -14,3 +14,5 @@ class Settings:
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
+        # 设置飞船载弹量
+        self.bullets_allowed = 4
