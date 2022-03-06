@@ -48,7 +48,7 @@ class AlienInvasion:
            self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             # 左移标签为真
-            self.ship.moving_left = True
+            self.ship.moving_left = True  
         elif event.key == pygame.K_q:
             # 退出游戏
             sys.exit()
@@ -65,7 +65,7 @@ class AlienInvasion:
             #  左移标签为假
             self.ship.moving_left = False
         
-    def _fire_bullet(self,event):
+    def _fire_bullet(self):
         """创建一颗子弹,并将其加入编组bullets中"""
         new_bullet = Bullet(self)
         self.bullets.add(new_bullet)
