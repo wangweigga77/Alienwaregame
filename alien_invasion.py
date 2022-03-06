@@ -25,6 +25,11 @@ class AlienInvasion:
             self.ship.update()
             # 对编组调用update()时，编组自动其中的每个精灵调用bullet.update()
             self.bullets.update()
+            # 删除消失的子弹
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            print(len(self.bullets))
             self._update_screen()
 
     def _check_events(self):
