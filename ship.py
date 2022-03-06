@@ -30,6 +30,7 @@ class Ship:
             self.ship_x += self.settings.ship_speed
         if self.moving_left and self.rect.left > 0:
             self.ship_x -= self.settings.ship_speed
+        # 将存储飞船x小数坐标值赋给飞船方块的x坐标
         self.rect.x = self.ship_x
 
 

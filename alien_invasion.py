@@ -24,13 +24,17 @@ class AlienInvasion:
             self._update_screen()
 
     def _check_events(self):
+        """实时监听鼠标和键盘的事件"""
         #  实时监测键盘和鼠标事件
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # 监听退出事件
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
+                # 监听安键事件
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
+                # 监听松键事件
                 self._check_keyup_events(event)
 
     def _check_keydown_events(self,event):
@@ -56,6 +60,7 @@ class AlienInvasion:
              
             
     def _update_screen(self):
+        """更新屏幕绘制的内容并刷新在屏幕上"""
         #  填充主窗口背景色
         self.screen.fill(self.settings.bg_color)
         # 填充背景后，调用blitme()将飞船绘制在屏幕上，确保它出现在背景前面

@@ -18,3 +18,5 @@ Ok ,let's go!
 3、在Bulletl类中，将子弹的y坐标使用小数存储，一遍后续通过小数来控制游戏速度
 4、在settings中增加子弹的设置，包括子弹的移动速度，宽、高、颜色
 5、在模块bullet.py中，增加Bullet类的行为update()和draw_bullet(), update()更新管理子弹的位置，需要绘制子弹是时，调用draw_bullet()
+6、将子弹存储到编组中
+7、开火
