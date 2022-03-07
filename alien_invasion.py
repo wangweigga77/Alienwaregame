@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     """管理游戏资源和行为的类"""
@@ -17,6 +18,13 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
+
+    def _create_fleet(self):
+        """创建外星人群组"""
+        alien = Alien(self)
+        self.aliens.add(alien)
 
     def run_game(self):
         """开始游戏的主循环"""
@@ -89,6 +97,11 @@ class AlienInvasion:
         # 通过迭代将bullets.sprites()列表中的所有精灵绘制到屏幕上
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+
+        # 向外星人编组调用draw()时，Pygame将把编组中的每个元素会知道属性rect指定的位置
+        # 方法draw()接受一个参数，参数指定将编组中的元素绘制到那个surface上
+        self.aliens.draw(self.screen)
+
         # 将绘制的图像刷新在屏幕上
         pygame.display.flip()
 
