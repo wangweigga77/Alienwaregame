@@ -26,19 +26,28 @@ class AlienInvasion:
         # 创建一个外星人，然后计算一行可以容纳多少个外星人
         # 外星人的间距等于一个外星人宽度
         alien = Alien(self)
-        alien_width = alien.rect.width
+        alien_width, alien_height = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
+        
+        # 计算屏幕可容纳多少行外星人
+        ship_height = self.ship.rect.height
+        available_space_y = self.settings.screen_height - (8 * alien_height) - ship_height
+        number_rows = available_space_y // (2 * alien_height)
 
-        # 创建第一行外星人
-        for alien_number in range(number_aliens_x):
-            self._create_alien(alien_number)
+        # 创建外星人矩阵
+        for row_number in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
 
-    def _create_alien(self, alien_number):
+    def _create_alien(self, alien_number, row_number):
+            """创建第alien_number个外星人"""
             alien = Alien(self)
-            alien_width = alien.rect.width
+            alien_width, alien_height = alien.rect.size
             self.alien_x = alien_width + (2 * alien_width * alien_number)
             alien.rect.x = self.alien_x
+            self.alien_y = alien_height + (2 * alien_height * row_number)
+            alien.rect.y = self.alien_y
             self.aliens.add(alien)
 
     def run_game(self):
