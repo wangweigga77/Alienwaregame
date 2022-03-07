@@ -55,6 +55,12 @@ class AlienInvasion:
             # 调用辅助方法_fire_bullet()发射子弹
             self._fire_bullet()
 
+    def _fire_bullet(self):
+        """创建一颗子弹,并将其加入编组bullets中"""
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
     def _check_keyup_events(self, event):
         """松键事件响应"""
         if event.key == pygame.K_RIGHT:
@@ -63,12 +69,6 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             #  左移标签为假
             self.ship.moving_left = False
-        
-    def _fire_bullet(self):
-        """创建一颗子弹,并将其加入编组bullets中"""
-        if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self)
-            self.bullets.add(new_bullet)
 
     def _update_bullets(self):
         """更新子弹位置,并将超出屏幕的子弹删除"""
