@@ -32,14 +32,14 @@ class AlienInvasion:
 
         # 创建第一行外星人
         for alien_number in range(number_aliens_x):
+            self._create_alien(alien_number)
+
+    def _create_alien(self, alien_number):
             alien = Alien(self)
+            alien_width = alien.rect.width
             self.alien_x = alien_width + (2 * alien_width * alien_number)
             alien.rect.x = self.alien_x
             self.aliens.add(alien)
-
-
-
-        self.aliens.add(alien)
 
     def run_game(self):
         """开始游戏的主循环"""
