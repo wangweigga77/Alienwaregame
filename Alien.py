@@ -20,7 +20,14 @@ class Alien(Sprite):
         # 精确保存外星人的x坐标
         self.alien_x = float(self.rect.x)
 
+    def check_egdes(self):
+        """如果外星人位于屏幕边缘,就返回True"""
+        screen_rect = self.screen.get_rect()
+        if self.rect.right > screen_rect.right or self.rect.left <= 0:
+            return True
+        
+
     def update(self):
-        """向右移动外星人"""
-        self.alien_x += self.settings.alien_speed
+        """向左或向右移动外星人"""
+        self.alien_x += (self.settings.alien_speed * self.settings.fleet_direction)
         self.rect.x = self.alien_x
