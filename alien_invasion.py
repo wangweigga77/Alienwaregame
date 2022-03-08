@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     """管理游戏资源和行为的类"""
@@ -17,6 +18,39 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
+
+    def _create_fleet(self):
+        """创建外星人群组"""
+        # 创建一个外星人，然后计算一行可以容纳多少个外星人
+        # 外星人的间距等于一个外星人宽度
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+
+        # 计算屏幕一行可容纳多少个外星人
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+        
+        # 计算屏幕可容纳多少行外星人
+        ship_height = self.ship.rect.height
+        available_space_y = self.settings.screen_height - (8 * alien_height) - ship_height
+        number_rows = available_space_y // (2 * alien_height)
+
+        # 创建（初始化）外星人矩阵--外星人登场阵列
+        for row_number in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
+
+    def _create_alien(self, alien_number, row_number):
+            """创建第alien_number个外星人"""
+            alien = Alien(self)
+            alien_width, alien_height = alien.rect.size
+            self.alien_x = alien_width + (2 * alien_width * alien_number)
+            alien.rect.x = self.alien_x
+            self.alien_y = alien_height + (2 * alien_height * row_number)
+            alien.rect.y = self.alien_y
+            self.aliens.add(alien)
 
     def run_game(self):
         """开始游戏的主循环"""
@@ -24,6 +58,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -79,6 +114,10 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+    def _update_aliens(self):
+        """更新外星人群众所有外星人的位置"""
+        self.aliens.update()
                         
     def _update_screen(self):
         """更新屏幕绘制的内容并刷新在屏幕上"""
@@ -89,6 +128,11 @@ class AlienInvasion:
         # 通过迭代将bullets.sprites()列表中的所有精灵绘制到屏幕上
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+
+        # 向外星人编组调用draw()时，Pygame将把编组中的每个元素会知道属性rect指定的位置
+        # 方法draw()接受一个参数，参数指定将编组中的元素绘制到那个surface上
+        self.aliens.draw(self.screen)
+
         # 将绘制的图像刷新在屏幕上
         pygame.display.flip()
 
