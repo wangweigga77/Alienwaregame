@@ -27,6 +27,8 @@ class AlienInvasion:
         # 外星人的间距等于一个外星人宽度
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
+
+        # 计算屏幕一行可容纳多少个外星人
         available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
         
@@ -35,7 +37,7 @@ class AlienInvasion:
         available_space_y = self.settings.screen_height - (8 * alien_height) - ship_height
         number_rows = available_space_y // (2 * alien_height)
 
-        # 创建外星人矩阵
+        # 创建（初始化）外星人矩阵--外星人登场阵列
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
                 self._create_alien(alien_number, row_number)
@@ -56,6 +58,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -111,6 +114,10 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+    def _update_aliens(self):
+        """更新外星人群众所有外星人的位置"""
+        self.aliens.update()
                         
     def _update_screen(self):
         """更新屏幕绘制的内容并刷新在屏幕上"""
