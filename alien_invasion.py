@@ -46,10 +46,9 @@ class AlienInvasion:
             """创建第alien_number个外星人"""
             alien = Alien(self)
             alien_width, alien_height = alien.rect.size
-            self.alien_x = alien_width + (2 * alien_width * alien_number)
-            alien.rect.x = self.alien_x
-            self.alien_y = alien_height + (2 * alien_height * row_number)
-            alien.rect.y = self.alien_y
+            alien.alien_x = alien_width + (2 * alien_width * alien_number)
+            alien.rect.x = alien.alien_x
+            alien.rect.y = alien_height + (2 * alien_height * row_number)
             self.aliens.add(alien)
 
     def run_game(self):
@@ -129,7 +128,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
-        # 向外星人编组调用draw()时，Pygame将把编组中的每个元素会知道属性rect指定的位置
+        # 向外星人编组调用draw()时，Pygame将把编组中的每个绘制到属性rect指定的位置
         # 方法draw()接受一个参数，参数指定将编组中的元素绘制到那个surface上
         self.aliens.draw(self.screen)
 
