@@ -50,7 +50,7 @@ class AlienInvasion:
             alien.rect.x = alien.alien_x
             alien.rect.y = alien_height + (2 * alien_height * row_number)
             self.aliens.add(alien)
-
+            
     def run_game(self):
         """开始游戏的主循环"""
         while True:
@@ -116,7 +116,21 @@ class AlienInvasion:
 
     def _update_aliens(self):
         """更新外星人群众所有外星人的位置"""
+        self._check_fleet_edges()
         self.aliens.update()
+        
+    def _check_fleet_edges(self):
+        """检测有外星人到达边缘时采取相应措施"""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+    
+    def _change_fleet_direction(self):
+        """将每个外星人依次向下移动,然后改变横移方向"""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
                         
     def _update_screen(self):
         """更新屏幕绘制的内容并刷新在屏幕上"""
