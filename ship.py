@@ -32,7 +32,11 @@ class Ship:
             self.ship_x -= self.settings.ship_speed
         # 将存储飞船x小数坐标值赋给飞船方块的x坐标
         self.rect.x = self.ship_x
-
+        
+    def center_ship(self):
+        """让飞船在屏幕底端居中"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.ship_x = float(self.rect.x)
 
     def blitme(self):
         """在制定位置绘制飞船"""
