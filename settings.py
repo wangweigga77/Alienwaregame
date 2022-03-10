@@ -15,7 +15,7 @@ class Settings:
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         # 设置飞船载弹量
-        self.bullets_allowed = 4
+        self.bullets_allowed = 8
         # 外星人的设置
         self.alien_speed = 1.0
         self.fleet_drop_speed = 10
