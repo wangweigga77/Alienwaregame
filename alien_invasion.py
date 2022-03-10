@@ -58,9 +58,10 @@ class AlienInvasion:
         """开始游戏的主循环"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()
+            if self.stats.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -137,23 +138,38 @@ class AlienInvasion:
         # 检测外星人和飞船之间的碰撞
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
+        
+        # 检查是否有外星人到达了屏幕底端
+        self._check_aliens_bottom()
             
     def _ship_hit(self):
         """响应外星人与飞船碰撞"""
-        # 将ship_left减1
-        self.stats.ships_left -= 1
-        
-        # 清空余下的子弹和外星人
-        self.bullets.empty()
-        self.aliens.empty()
-        
-        # 重新创建一群外星人，并将新的飞船放在屏幕底端中央
-        self._create_fleet()
-        self.ship.center_ship()
-        
-        # 暂停0.5秒
-        sleep(0.5)
-        
+        if self.stats.ship_left > 0 :
+            # 将ship_left减1
+            self.stats.ships_left -= 1
+            
+            # 清空余下的子弹和外星人
+            self.bullets.empty()
+            self.aliens.empty()
+            
+            # 重新创建一群外星人，并将新的飞船放在屏幕底端中央
+            self._create_fleet()
+            self.ship.center_ship()
+            
+            # 暂停0.5秒
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
+    
+    def _check_aliens_bottom(self):
+        """检查外星人是否到达屏幕底端,如果到达,执行_ship_hit()"""
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                #  像飞船被撞一样处理
+                self._ship_hit()
+                break
+            
     def _check_fleet_edges(self):
         """检测有外星人到达边缘时采取相应措施"""
         for alien in self.aliens.sprites():
